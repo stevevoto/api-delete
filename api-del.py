@@ -1,3 +1,23 @@
+##!/usr/bin/env python3
+###########################
+# Mist API Code by Steve Voto (Enhanced)
+# ======================================
+# This script interfaces with the Mist API to manage various networking components:
+#  - Applications/Services
+#  - Networks
+#  - Sites
+#  - Hub profiles
+#  - WAN edges
+#
+# New Features:
+# 1) Reads org_id and token from Token-Org.txt (instead of prompting or hard-coding).
+# 2) Reads and allows deletion of any or all elements.
+#
+# Usage:
+#   python3 api-del.py
+#
+###########################
+
 import requests
 
 def read_token_org(file_path="Token-Org.txt"):
