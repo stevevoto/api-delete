@@ -45,7 +45,7 @@ This Python script provides an **interactive, command-line** way to list and del
   ```bash
   pip install requests
 
-  Setup
+##  Setup
 Install Dependencies
 
 bash
@@ -60,18 +60,15 @@ token=<YOUR_MIST_API_TOKEN>
 org_id=<YOUR_ORGANIZATION_ID>
 Make sure this file is excluded from version control if it contains sensitive info.
 
-Run the Script
+## Run the Script
 
 bash
 Copy
 python your_script_name.py
 The script will read your token and org ID, then show you a menu.
 
-Usage
+## Usage
 When you run the script, you’ll see a menu:
-
-markdown
-Copy
 Choose a section to manage:
  1. Sites
  2. Applications
@@ -80,20 +77,18 @@ Choose a section to manage:
  5. WAN Edges
  6. Remove All (All Sections)
  0. Exit
-Select a number (1–5) to manage that resource. The script lists all found items:
-
-You can choose which ones to delete by entering their index (e.g., 1,3,5) or type all to delete everything in that section.
-Type exit to return to the main menu.
-Select “6” to remove every resource in all sections with a single confirmation.
-
+Select a number (1–5) to manage that resource:
+The script lists all found items for the chosen section.
+You can delete specific items by entering their index (e.g., 1,3,5) or type all to delete every item in that section.
+Type exit to return to the main menu without deleting.
+Select “6” to remove every resource in all sections (after a single confirmation).
 Select “0” to exit.
-
 Example Workflows
 Delete a Single Site
 
 Select 1 for Sites.
 The script displays your existing sites, each with an index (1, 2, 3, …).
-Enter, for example, 2 to remove the second site. Confirm “yes” to finalize.
+Enter 2 (for example) to remove the second site. Confirm “yes” to finalize.
 Delete All Hub Profiles
 
 Select 4 for Hub Profiles (gateway device profiles).
@@ -103,49 +98,3 @@ Remove Everything
 
 Select 6 (“Remove All”).
 After a single “Are you absolutely sure?” confirmation, the script iterates through all sections (Sites, Applications, Networks, Hub Profiles, WAN Edges) and deletes any items found.
-How It Works
-Token & Org ID
-
-The script reads Token-Org.txt to parse the token and org_id.
-Sections & API Paths
-
-A global sections dictionary defines each resource type with its list_path (for GET) and delete_path (for DELETE).
-The script uses these paths to build requests like:
-GET /api/v1/<list_path> → retrieve items
-DELETE /api/v1/<delete_path>/{item_id} → remove items
-Interactive Deletion
-
-For each resource type, the script prints out all items, each with a numbered index.
-You can:
-Enter indexes (comma-separated) to remove specific items.
-Enter “all” to remove all items.
-Enter “exit” to skip without deleting.
-Remove All in One Shot
-
-Option 6 loops through each defined section in the script, listing items and deleting them all. A single confirmation covers the entire batch.
-Contributing
-To add or customize resource types:
-
-Open the script and locate the sections dictionary:
-python
-Copy
-sections = {
-    "1": {
-        "name": "Sites",
-        "list_path": "/orgs/{org_id}/sites",
-        "delete_path": "/sites"
-    },
-    "2": {
-        "name": "Applications",
-        "list_path": "/orgs/{org_id}/services",
-        "delete_path": "/orgs/{org_id}/services"
-    },
-    ...
-}
-Adjust, remove, or add a new entry following the same pattern.
-list_path may include {org_id} if needed.
-delete_path is the base path to which /{item_id} is appended.
-If you have any questions or encounter issues, feel free to open an issue or submit a pull request!
-
-License
-This project is available under the MIT license. See the LICENSE file for more details.
