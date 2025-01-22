@@ -98,3 +98,51 @@ Remove Everything
 
 Select 6 (“Remove All”).
 After a single “Are you absolutely sure?” confirmation, the script iterates through all sections (Sites, Applications, Networks, Hub Profiles, WAN Edges) and deletes any items found.
+
+## How It Works
+Token & Org ID
+
+The script reads Token-Org.txt to parse token and org_id.
+Sections & API Paths
+
+A global sections dictionary defines each resource type with:
+list_path for GET requests
+delete_path for DELETE requests
+The script calls GET /api/v1/<list_path> to retrieve items, then DELETE /api/v1/<delete_path>/{item_id} to remove an item.
+Interactive Deletion
+
+For each resource type, the script lists items and their indices.
+You can:
+Enter comma-separated indices to remove specific items.
+Enter all to remove every item in that section.
+Enter exit to return without deleting anything.
+Remove All in One Shot
+
+The “Remove All” option (menu item 6) iterates through each section in the script, deleting all items in each one after a single confirmation.
+
+## Contributing
+To add or customize resource types:
+
+Open the script and locate the sections dictionary:
+python
+Copy
+sections = {
+    "1": {
+        "name": "Sites",
+        "list_path": "/orgs/{org_id}/sites",
+        "delete_path": "/sites"
+    },
+    "2": {
+        "name": "Applications",
+        "list_path": "/orgs/{org_id}/services",
+        "delete_path": "/orgs/{org_id}/services"
+    },
+    ...
+}
+Adjust, remove, or add a new entry following the same pattern:
+list_path may include {org_id} if needed.
+delete_path is the base path to which /{item_id} is appended.
+Feel free to open an issue or submit a pull request if you have questions, suggestions, or encounter issues.
+
+## License
+This project is available under the MIT License. See the LICENSE file for more details.
